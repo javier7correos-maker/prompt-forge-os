@@ -1,0 +1,4 @@
+2026-04-08 | components/layout/Sidebar.tsx       | ✅ FUNCIONA | Claude | nav items, user info, plan badge
+2026-04-08 | components/layout/Header.tsx        | ✅ FUNCIONA | Claude | pageTitle + avatar + plan
+2026-04-08 | app/(app)/layout.tsx                | ✅ FUNCIONA | Claude | layout protegido con Sidebar + Header
+2026-04-08 | app/(app)/dashboard/page.tsx        | ✅ FUNCIONA | Claude | stats reales + últimos forges + CTAs

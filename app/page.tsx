@@ -1,113 +1,292 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
 
-export default function Home() {
+const useCases = [
+  'Lanzar una landing y empezar a vender en 1 dia',
+  'Crear scripts Python para Windows y automatizar tareas',
+  'Ordenar finanzas y tomar decisiones con criterio',
+  'Diseñar ofertas, contenido, prompts y agentes reutilizables',
+]
+
+const modules = [
+  {
+    title: 'Forge',
+    text: 'Convierte una idea en estrategia, deliverable y prompt ejecutable.',
+  },
+  {
+    title: 'Library',
+    text: 'Te da playbooks por caso de uso para no arrancar desde cero.',
+  },
+  {
+    title: 'Vault',
+    text: 'Guarda errores, soluciones y sistemas ganadores para reutilizarlos.',
+  },
+]
+
+export default async function Home() {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main>
+      <header
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '20px 28px',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'rgba(7, 8, 13, 0.72)',
+          backdropFilter: 'blur(18px)',
+        }}
+      >
+        <div
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '24px',
+            color: 'var(--gold)',
+            letterSpacing: '0.06em',
+          }}
+        >
+          PROMPT FORGE OS
         </div>
-      </div>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <Link
+            href={user ? '/dashboard' : '/login'}
+            style={{
+              padding: '12px 18px',
+              borderRadius: '999px',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
+              textDecoration: 'none',
+            }}
+          >
+            {user ? 'Abrir dashboard' : 'Ingresar'}
+          </Link>
+          <Link
+            href={user ? '/forge' : '/register'}
+            style={{
+              padding: '12px 18px',
+              borderRadius: '999px',
+              background: 'var(--gold)',
+              color: 'var(--bg)',
+              textDecoration: 'none',
+              fontWeight: 700,
+            }}
+          >
+            {user ? 'Ir a Forge' : 'Empezar'}
+          </Link>
+        </div>
+      </header>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      <section
+        style={{
+          minHeight: 'calc(100svh - 81px)',
+          padding: '56px 28px 48px',
+          display: 'grid',
+          alignItems: 'end',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '1280px',
+            margin: '0 auto',
+            display: 'grid',
+            gap: '28px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          }}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          <div style={{ alignSelf: 'center' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                padding: '8px 12px',
+                borderRadius: '999px',
+                border: '1px solid rgba(200,169,106,0.3)',
+                color: 'var(--gold)',
+                fontSize: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+              }}
+            >
+              execution operating system
+            </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+            <h1
+              style={{
+                margin: '18px 0 0',
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(3.5rem, 8vw, 7rem)',
+                lineHeight: 0.92,
+                color: 'var(--gold)',
+                maxWidth: '820px',
+              }}
+            >
+              De idea vaga a proyecto util en un dia.
+            </h1>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+            <p
+              style={{
+                marginTop: '18px',
+                color: 'var(--text-dim)',
+                fontSize: '18px',
+                lineHeight: 1.75,
+                maxWidth: '640px',
+              }}
+            >
+              Prompt Forge OS organiza estrategia, ejecucion, memoria y playbooks para que puedas
+              lanzar landings, automatizaciones, scripts, ofertas, analisis financieros y sistemas de negocio
+              sin perderte en vueltas.
+            </p>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '24px' }}>
+              <Link
+                href={user ? '/forge' : '/register'}
+                style={{
+                  padding: '15px 22px',
+                  borderRadius: '999px',
+                  background: 'var(--gold)',
+                  color: 'var(--bg)',
+                  textDecoration: 'none',
+                  fontWeight: 700,
+                }}
+              >
+                {user ? 'Ejecutar un Forge' : 'Crear cuenta y usarlo'}
+              </Link>
+              <Link
+                href={user ? '/library' : '/login'}
+                style={{
+                  padding: '15px 22px',
+                  borderRadius: '999px',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text)',
+                  textDecoration: 'none',
+                }}
+              >
+                Ver estructura del sistema
+              </Link>
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '26px',
+              borderRadius: '28px',
+              border: '1px solid rgba(255,255,255,0.08)',
+              background:
+                'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))',
+              boxShadow: '0 20px 80px rgba(0,0,0,0.35)',
+            }}
+          >
+            <div style={{ display: 'grid', gap: '14px' }}>
+              {modules.map((module) => (
+                <div
+                  key={module.title}
+                  style={{
+                    padding: '16px 18px',
+                    borderRadius: '18px',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    background: 'rgba(10, 12, 18, 0.86)',
+                  }}
+                >
+                  <div style={{ color: 'var(--gold)', fontWeight: 700 }}>{module.title}</div>
+                  <div style={{ color: 'var(--text-dim)', marginTop: '6px', lineHeight: 1.6 }}>{module.text}</div>
+                </div>
+              ))}
+            </div>
+
+            <div
+              style={{
+                marginTop: '18px',
+                paddingTop: '18px',
+                borderTop: '1px solid rgba(255,255,255,0.08)',
+                display: 'grid',
+                gap: '10px',
+              }}
+            >
+              {useCases.map((item) => (
+                <div key={item} style={{ color: 'var(--text-dim)' }}>
+                  • {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: '0 28px 28px' }}>
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '1280px',
+            margin: '0 auto',
+            display: 'grid',
+            gap: '18px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          }}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          {[
+            {
+              title: 'Pensado para free-first',
+              text: 'Modo manual listo desde el dia uno y soporte para Gemini como opcion API gratuita.',
+            },
+            {
+              title: 'Seguridad por defecto',
+              text: 'Headers, auth revalidada, rate limiting y control de superficie de ataque en backend.',
+            },
+            {
+              title: 'Automejora operativa',
+              text: 'Vault guarda lecciones, errores y sistemas ganadores para reusar experiencia acumulada.',
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              style={{
+                padding: '24px',
+                borderRadius: '22px',
+                border: '1px solid var(--border)',
+                background: 'var(--bg-card)',
+              }}
+            >
+              <h2 style={{ margin: 0, fontSize: '28px' }}>{item.title}</h2>
+              <p style={{ color: 'var(--text-dim)', lineHeight: 1.7, marginTop: '10px' }}>{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ padding: '16px 28px 56px' }}>
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '1280px',
+            margin: '0 auto',
+            padding: '34px',
+            borderRadius: '28px',
+            border: '1px solid rgba(200,169,106,0.18)',
+            background: 'linear-gradient(135deg, rgba(200,169,106,0.08), rgba(91,158,255,0.05))',
+          }}
+        >
+          <div style={{ maxWidth: '720px' }}>
+            <div style={{ color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.14em', fontSize: '12px' }}>
+              operating sequence
+            </div>
+            <h2 style={{ margin: '14px 0 0', fontSize: '42px', fontFamily: 'var(--font-display)', color: 'var(--gold)' }}>
+              Elegir playbook. Ejecutar. Medir. Guardar aprendizaje. Repetir.
+            </h2>
+            <p style={{ color: 'var(--text-dim)', lineHeight: 1.75, marginTop: '14px' }}>
+              Ese es el centro de la estrategia nueva. No prometer un milagro abstracto, sino reducir el ciclo
+              de proyecto para que en horas puedas salir con una oferta, un sistema o un activo publicable.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
-  );
+  )
 }
