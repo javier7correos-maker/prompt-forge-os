@@ -14,6 +14,9 @@ const ALLOWED_CATEGORIES: ForgeCategory[] = [
   'ads',
   'ventas',
   'codigo',
+  'agentes_ia',
+  'finanzas_negocios',
+  'otros',
 ]
 
 const ALLOWED_OUTPUT_TYPES: ForgeOutputType[] = [
@@ -31,13 +34,16 @@ const ALLOWED_OUTPUT_TYPES: ForgeOutputType[] = [
   'automation_flow',
   'agent_system',
   'full_system',
+  'bot_whatsapp',
+  'plan_financiero',
+  'manager_sop',
+  'otros',
 ]
 
 function cleanText(value: unknown, maxLength: number) {
   if (typeof value !== 'string') {
     return ''
   }
-
   return value
     .replace(/\0/g, '')
     .replace(/\s+/g, ' ')
@@ -89,7 +95,11 @@ export function sanitizeForgeRequest(input: unknown): ForgeGenerationRequest {
       diferencial: cleanText(answersSource.diferencial, 260),
       objetivo: cleanText(answersSource.objetivo, 260),
       constraints: cleanText(answersSource.constraints, 260),
-      memoryContext: cleanText(answersSource.memoryContext, 1800),
+      memoryContext: cleanText(answersSource.memoryContext, 1800) || undefined,
+      brandName: cleanText(answersSource.brandName, 120) || undefined,
+      tone: cleanText(answersSource.tone, 120) || undefined,
+      osEnv: cleanText(answersSource.osEnv, 120) || undefined,
+      targetModel: cleanText(answersSource.targetModel, 120) || undefined,
     },
   }
 }

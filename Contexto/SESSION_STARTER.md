@@ -26,8 +26,8 @@ OS: Windows 11 + PowerShell
 SUPABASE
 ════════════════════════════════════════════════
 URL: https://slyswtrlgekwultzqvqf.supabase.co
-ANON KEY: sb_publishable_uPnisUuQ5L1GkUCSEWnd3A_3zZYt_cg
-SECRET: sb_secret_ttjUjG4hAZUaWm3uiFQ3yA_vJnShRMD
+ANON KEY: [ver .env.local]
+SECRET: [ver .env.local]
 ANTHROPIC_API_KEY: vacío (Fase 1 sin costo)
 
 Tablas: profiles (id, email, name, plan, forges_count, created_at)

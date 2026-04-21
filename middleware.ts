@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const PROTECTED_PATHS = ['/dashboard', '/forge', '/history', '/settings']
+const PROTECTED_PATHS = ['/dashboard', '/forge', '/history', '/settings', '/library', '/vault']
 const AUTH_PATHS = ['/login', '/register']
 
 function matchesPath(pathname: string, candidates: string[]) {

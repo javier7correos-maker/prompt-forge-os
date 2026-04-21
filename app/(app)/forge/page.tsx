@@ -16,6 +16,7 @@ import {
   parseForgePreferences,
 } from '@/lib/forge/preferences'
 import { buildVaultContext, parseVaultEntries, VAULT_STORAGE_KEY } from '@/lib/vault/storage'
+import { useErrorCapture } from '@/lib/hooks/useErrorCapture'
 import type {
   AIProviderRuntimeInfo,
   ForgeCategory,
@@ -55,6 +56,7 @@ export default function ForgePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState<ForgeGenerationResponse | null>(null)
+  const { capture } = useErrorCapture()
 
   useEffect(() => {
     const stored = parseForgePreferences(window.localStorage.getItem(FORGE_PREFERENCES_STORAGE_KEY))
@@ -200,7 +202,15 @@ export default function ForgePage() {
 
       setResult(payload)
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : 'Ocurrio un error inesperado.')
+      const msg = requestError instanceof Error ? requestError.message : 'Ocurrio un error inesperado.'
+      setError(msg)
+      // Capturar en el sistema de aprendizaje para que no vuelva a pasar
+      void capture({
+        error_message: msg,
+        error_context: `Forge: idea="${idea.slice(0, 100)}" category="${category}" provider="${preferences.defaultProvider}"`,
+        fix: 'Revisar conexion API y variables de entorno del proveedor seleccionado.',
+        project_type: category,
+      })
     } finally {
       setLoading(false)
     }
